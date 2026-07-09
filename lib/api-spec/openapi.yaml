@@ -3,13 +3,17 @@ info:
   # Do not change the title, if the title changes, the import paths will be broken
   title: Api
   version: 0.1.0
-  description: API specification
+  description: Discord Bot Dashboard API
 servers:
   - url: /api
     description: Base API path
 tags:
   - name: health
     description: Health operations
+  - name: auth
+    description: Authentication via Discord OAuth2
+  - name: bot
+    description: Discord bot statistics and guild info
 paths:
   /healthz:
     get:
@@ -24,6 +28,93 @@ paths:
             application/json:
               schema:
                 $ref: "#/components/schemas/HealthStatus"
+
+  /auth/me:
+    get:
+      operationId: getMe
+      tags: [auth]
+      summary: Get current authenticated user
+      description: Returns the currently logged-in Discord user, or 401 if not authenticated
+      responses:
+        "200":
+          description: Current user info
+          content:
+            application/json:
+              schema:
+                $ref: "#/components/schemas/DiscordUser"
+        "401":
+          description: Not authenticated
+          content:
+            application/json:
+              schema:
+                $ref: "#/components/schemas/ErrorResponse"
+
+  /auth/logout:
+    post:
+      operationId: logout
+      tags: [auth]
+      summary: Log out
+      description: Destroys the session and logs out the user
+      responses:
+        "200":
+          description: Logged out successfully
+          content:
+            application/json:
+              schema:
+                $ref: "#/components/schemas/SuccessResponse"
+
+  /bot/stats:
+    get:
+      operationId: getBotStats
+      tags: [bot]
+      summary: Get bot statistics
+      description: Returns aggregated stats about the bot (server count, user count, uptime, commands)
+      responses:
+        "200":
+          description: Bot statistics
+          content:
+            application/json:
+              schema:
+                $ref: "#/components/schemas/BotStats"
+
+  /bot/guilds:
+    get:
+      operationId: getBotGuilds
+      tags: [bot]
+      summary: Get guilds the bot is in
+      description: Returns a list of Discord servers the bot is a member of
+      responses:
+        "200":
+          description: List of guilds
+          content:
+            application/json:
+              schema:
+                type: array
+                items:
+                  $ref: "#/components/schemas/BotGuild"
+
+  /bot/user-guilds:
+    get:
+      operationId: getUserGuilds
+      tags: [bot]
+      summary: Get guilds where user and bot share membership
+      description: Returns guilds the logged-in user manages that also have the bot installed
+      responses:
+        "200":
+          description: Guilds the user can manage
+          content:
+            application/json:
+              schema:
+                type: array
+                items:
+                  $ref: "#/components/schemas/UserGuild"
+        "401":
+          description: Not authenticated
+          content:
+            application/json:
+              schema:
+                $ref: "#/components/schemas/ErrorResponse"
+
 components:
   schemas:
     HealthStatus:
@@ -34,3 +125,111 @@ components:
       required:
         - status
 
+    DiscordUser:
+      type: object
+      properties:
+        id:
+          type: string
+        username:
+          type: string
+        discriminator:
+          type: string
+        avatar:
+          type: ["string", "null"]
+        avatarUrl:
+          type: string
+        email:
+          type: ["string", "null"]
+      required:
+        - id
+        - username
+        - discriminator
+        - avatarUrl
+
+    BotStats:
+      type: object
+      properties:
+        guildCount:
+          type: integer
+        userCount:
+          type: integer
+        commandCount:
+          type: integer
+        uptime:
+          type: integer
+          description: Uptime in seconds
+        ping:
+          type: integer
+          description: Bot latency in ms
+        botName:
+          type: string
+        botAvatarUrl:
+          type: ["string", "null"]
+        botId:
+          type: string
+      required:
+        - guildCount
+        - userCount
+        - commandCount
+        - uptime
+        - ping
+        - botName
+        - botId
+
+    BotGuild:
+      type: object
+      properties:
+        id:
+          type: string
+        name:
+          type: string
+        icon:
+          type: ["string", "null"]
+        iconUrl:
+          type: ["string", "null"]
+        memberCount:
+          type: integer
+        ownerId:
+          type: string
+      required:
+        - id
+        - name
+        - memberCount
+        - ownerId
+
+    UserGuild:
+      type: object
+      properties:
+        id:
+          type: string
+        name:
+          type: string
+        icon:
+          type: ["string", "null"]
+        iconUrl:
+          type: ["string", "null"]
+        botInstalled:
+          type: boolean
+        permissions:
+          type: string
+      required:
+        - id
+        - name
+        - botInstalled
+        - permissions
+
+    ErrorResponse:
+      type: object
+      properties:
+        error:
+          type: string
+      required:
+        - error
+
+    SuccessResponse:
+      type: object
+      properties:
+        success:
+          type: boolean
+      required:
+        - success
