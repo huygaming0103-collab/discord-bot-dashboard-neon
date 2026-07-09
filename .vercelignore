@@ -1,0 +1,10 @@
+# Ignore Replit-specific files
+.replit
+replit.nix
+.upm/
+.cache/
+.config/
+attached_assets/
+.agents/
+.local/
+node_modules/
