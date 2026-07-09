@@ -30,7 +30,7 @@ export function Landing() {
               <span className="animate-ping absolute inline-flex h-full w-full rounded-full bg-primary opacity-75"></span>
               <span className="relative inline-flex rounded-full h-2 w-2 bg-primary"></span>
             </span>
-            SYSTEM ONLINE & SECURE
+            HỆ THỐNG TRỰC TUYẾN & AN TOÀN
           </motion.div>
 
           <motion.h1 
@@ -40,10 +40,10 @@ export function Landing() {
             className="text-6xl md:text-8xl font-display font-black tracking-tighter mb-6 leading-none"
           >
             <span className="text-transparent bg-clip-text bg-gradient-to-br from-primary via-secondary to-accent neon-text-primary">
-              CYBERBOT
+              HDGBot
             </span>
             <br />
-            <span className="text-foreground">PROTOCOL</span>
+            <span className="text-foreground">GIAO THỨC</span>
           </motion.h1>
 
           <motion.p 
@@ -52,8 +52,8 @@ export function Landing() {
             transition={{ duration: 0.6, delay: 0.2 }}
             className="text-xl text-muted-foreground max-w-2xl mx-auto mb-12"
           >
-            Next-generation moderation and utility infrastructure for advanced Discord networks.
-            Power, precision, and perfect aesthetics.
+            Hệ thống kiểm duyệt và tiện ích thế hệ mới cho các mạng Discord nâng cao.
+            Sức mạnh, độ chính xác và thẩm mỹ hoàn hảo.
           </motion.p>
 
           <motion.div 
@@ -64,14 +64,14 @@ export function Landing() {
           >
             <NeonButton href={inviteUrl} variant="primary" target="_blank" rel="noopener noreferrer">
               <Zap className="w-5 h-5 mr-2" />
-              INTEGRATE NOW
+              MỜI BOT VỀ SERVER
             </NeonButton>
             
             <a 
               href="/api/auth/discord"
               className="text-muted-foreground hover:text-white flex items-center gap-2 font-display uppercase tracking-widest text-sm hover:neon-text-secondary transition-all"
             >
-              Access Terminal <ArrowRight className="w-4 h-4" />
+              Truy Cập Terminal <ArrowRight className="w-4 h-4" />
             </a>
           </motion.div>
 
@@ -80,9 +80,9 @@ export function Landing() {
             <div className="absolute inset-0 bg-primary/5 blur-3xl rounded-full -z-10"></div>
             
             {[
-              { label: "CONNECTED NETWORKS", value: stats?.guildCount?.toLocaleString() || "---", icon: Server, color: "primary" },
-              { label: "ACTIVE IDENTITIES", value: stats?.userCount?.toLocaleString() || "---", icon: Users, color: "secondary" },
-              { label: "COMMANDS PROCESSED", value: stats?.commandCount?.toLocaleString() || "---", icon: Code, color: "accent" }
+              { label: "MẠNG ĐÃ KẾT NỐI", value: stats?.guildCount?.toLocaleString() || "---", icon: Server, color: "primary" },
+              { label: "NGƯỜI DÙNG HOẠT ĐỘNG", value: stats?.userCount?.toLocaleString() || "---", icon: Users, color: "secondary" },
+              { label: "LỆNH ĐÃ XỬ LÝ", value: stats?.commandCount?.toLocaleString() || "---", icon: Code, color: "accent" }
             ].map((stat, i) => (
               <motion.div 
                 key={i}

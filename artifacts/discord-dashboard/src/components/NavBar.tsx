@@ -29,16 +29,16 @@ export function NavBar() {
             <Terminal className="w-5 h-5 text-primary group-hover:text-white transition-colors" />
           </div>
           <span className="font-display font-bold text-xl tracking-wider text-transparent bg-clip-text bg-gradient-to-r from-primary to-secondary">
-            CYBERBOT
+            HDGBot
           </span>
         </Link>
 
         <div className="flex items-center gap-6">
           <Link href="/dashboard" className="text-sm font-medium text-muted-foreground hover:text-primary transition-colors neon-text-primary hover:text-shadow-sm">
-            Dashboard
+            Bảng Điều Khiển
           </Link>
           <Link href="/guilds" className="text-sm font-medium text-muted-foreground hover:text-primary transition-colors neon-text-primary hover:text-shadow-sm">
-            Servers
+            Máy Chủ
           </Link>
           
           <div className="h-6 w-px bg-border mx-2"></div>
@@ -71,7 +71,7 @@ export function NavBar() {
               className="flex items-center gap-2 bg-primary/20 hover:bg-primary/30 text-primary border border-primary hover:neon-glow-primary px-4 py-2 rounded-md transition-all duration-300 text-sm font-bold tracking-wide"
             >
               <LogIn className="w-4 h-4" />
-              <span>SYSTEM LOGIN</span>
+              <span>ĐĂNG NHẬP</span>
             </a>
           )}
         </div>
