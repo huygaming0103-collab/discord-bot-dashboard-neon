@@ -9,12 +9,13 @@ if (!BOT_TOKEN) {
   logger.warn("DISCORD_BOT_TOKEN is not set");
 }
 
-export function getOAuthUrl(redirectUri: string): string {
+export function getOAuthUrl(redirectUri: string, state: string): string {
   const params = new URLSearchParams({
     client_id: CLIENT_ID,
     redirect_uri: redirectUri,
     response_type: "code",
     scope: "identify email guilds",
+    state,
   });
   return `https://discord.com/api/oauth2/authorize?${params.toString()}`;
 }

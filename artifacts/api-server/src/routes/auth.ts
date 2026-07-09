@@ -1,4 +1,5 @@
 import { Router } from "express";
+import { randomBytes } from "crypto";
 import { db, discordUsersTable } from "@workspace/db";
 import {
   getOAuthUrl,
@@ -19,16 +20,38 @@ function getRedirectUri(req: import("express").Request): string {
   return `${proto}://${host}/api/auth/callback`;
 }
 
-// GET /api/auth/discord — redirect to Discord OAuth
+// GET /api/auth/discord — redirect to Discord OAuth with CSRF state
 router.get("/auth/discord", (req, res) => {
-  const redirectUri = getRedirectUri(req);
-  const url = getOAuthUrl(redirectUri);
-  res.redirect(url);
+  const state = randomBytes(16).toString("hex");
+  (req.session as unknown as Record<string, unknown>)["oauthState"] = state;
+
+  req.session.save((err) => {
+    if (err) {
+      req.log.error({ err }, "Failed to save OAuth state to session");
+      return res.redirect("/?error=session_error");
+    }
+    const redirectUri = getRedirectUri(req);
+    const url = getOAuthUrl(redirectUri, state);
+    res.redirect(url);
+  });
 });
 
-// GET /api/auth/callback — handle OAuth callback
+// GET /api/auth/callback — handle OAuth callback with CSRF state validation
 router.get("/auth/callback", async (req, res) => {
-  const { code, error } = req.query as { code?: string; error?: string };
+  const { code, error, state } = req.query as {
+    code?: string;
+    error?: string;
+    state?: string;
+  };
+
+  const session = req.session as unknown as Record<string, unknown>;
+  const savedState = session["oauthState"] as string | undefined;
+  delete session["oauthState"];
+
+  if (!state || !savedState || state !== savedState) {
+    req.log.warn("OAuth state mismatch — possible CSRF attack");
+    return res.redirect("/?error=state_mismatch");
+  }
 
   if (error || !code) {
     req.log.warn({ error }, "OAuth callback error");
