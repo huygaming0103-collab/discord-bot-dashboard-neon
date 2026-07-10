@@ -1,81 +1,135 @@
 import React from "react";
-import { Link } from "wouter";
-import { motion } from "framer-motion";
-import { LogIn, LogOut, LayoutDashboard, Terminal } from "lucide-react";
-import { useGetMe, useLogout } from "@workspace/api-client-react";
+import { Link, useLocation } from "wouter";
+import { LogIn, LogOut, LayoutDashboard, Server } from "lucide-react";
+import { useGetMe, useLogout, useGetBotStats } from "@workspace/api-client-react";
+
+const INVITE_URL =
+  "https://discord.com/oauth2/authorize?client_id=1446826370838560859&permissions=8&integration_type=0&scope=bot+applications.commands";
+
+const NAV_LINKS = [
+  { label: "Trang chủ", href: "/" },
+  { label: "Lệnh bot", href: "/commands" },
+  { label: "Điều khoản", href: "/terms" },
+  { label: "Bảo mật", href: "/privacy" },
+];
 
 export function NavBar() {
+  const [location] = useLocation();
   const { data: user, isLoading } = useGetMe();
+  const { data: stats } = useGetBotStats();
   const logoutMutation = useLogout();
 
   const handleLogout = () => {
     logoutMutation.mutate(undefined, {
-      onSuccess: () => {
-        window.location.href = "/";
-      },
+      onSuccess: () => { window.location.href = "/"; },
     });
   };
 
   return (
-    <motion.nav 
-      initial={{ y: -100 }}
-      animate={{ y: 0 }}
-      transition={{ duration: 0.5, ease: "easeOut" }}
-      className="sticky top-0 z-50 w-full backdrop-blur-md bg-background/80 border-b border-primary/20 neon-glow-primary"
-    >
-      <div className="container mx-auto px-4 h-16 flex items-center justify-between">
-        <Link href="/" className="flex items-center gap-2 group cursor-pointer">
-          <div className="p-2 bg-primary/10 rounded-lg border border-primary/30 group-hover:neon-glow-primary transition-all duration-300">
-            <Terminal className="w-5 h-5 text-primary group-hover:text-white transition-colors" />
-          </div>
-          <span className="font-display font-bold text-xl tracking-wider text-transparent bg-clip-text bg-gradient-to-r from-primary to-secondary">
+    <nav className="sticky top-0 z-50 w-full border-b border-white/5 bg-[#0a0e1a]/90 backdrop-blur-md">
+      <div className="max-w-7xl mx-auto px-6 h-16 flex items-center justify-between">
+
+        {/* Logo */}
+        <Link href="/" className="flex items-center gap-3 group">
+          {stats?.botAvatarUrl ? (
+            <img
+              src={stats.botAvatarUrl}
+              alt="HDGBot"
+              className="w-9 h-9 rounded-full border-2 border-cyan-500/40 group-hover:border-cyan-400 transition-colors"
+            />
+          ) : (
+            <div className="w-9 h-9 rounded-full bg-cyan-500/20 border-2 border-cyan-500/40 flex items-center justify-center">
+              <span className="text-cyan-400 text-xs font-bold">H</span>
+            </div>
+          )}
+          <span className="font-bold text-lg text-white tracking-wide">
             HDGBot
           </span>
         </Link>
 
-        <div className="flex items-center gap-6">
-          <Link href="/dashboard" className="text-sm font-medium text-muted-foreground hover:text-primary transition-colors neon-text-primary hover:text-shadow-sm">
-            Bảng Điều Khiển
-          </Link>
-          <Link href="/guilds" className="text-sm font-medium text-muted-foreground hover:text-primary transition-colors neon-text-primary hover:text-shadow-sm">
-            Máy Chủ
-          </Link>
-          
-          <div className="h-6 w-px bg-border mx-2"></div>
+        {/* Center Nav Links */}
+        <div className="hidden md:flex items-center gap-8">
+          {NAV_LINKS.map((link) => (
+            <Link
+              key={link.href}
+              href={link.href}
+              className={`text-sm transition-colors ${
+                location === link.href
+                  ? "text-white font-medium"
+                  : "text-gray-400 hover:text-white"
+              }`}
+            >
+              {link.label}
+            </Link>
+          ))}
+          {user && (
+            <>
+              <Link
+                href="/dashboard"
+                className={`text-sm transition-colors flex items-center gap-1.5 ${
+                  location === "/dashboard" ? "text-white font-medium" : "text-gray-400 hover:text-white"
+                }`}
+              >
+                <LayoutDashboard className="w-3.5 h-3.5" />
+                Dashboard
+              </Link>
+              <Link
+                href="/guilds"
+                className={`text-sm transition-colors flex items-center gap-1.5 ${
+                  location === "/guilds" ? "text-white font-medium" : "text-gray-400 hover:text-white"
+                }`}
+              >
+                <Server className="w-3.5 h-3.5" />
+                Máy chủ
+              </Link>
+            </>
+          )}
+        </div>
 
+        {/* Right Actions */}
+        <div className="flex items-center gap-3">
           {isLoading ? (
-            <div className="h-8 w-24 bg-primary/10 animate-pulse rounded-md" />
+            <div className="h-9 w-24 bg-white/5 animate-pulse rounded-lg" />
           ) : user ? (
-            <div className="flex items-center gap-4">
+            <div className="flex items-center gap-3">
               <div className="flex items-center gap-2">
-                <img 
-                  src={user.avatarUrl} 
-                  alt={user.username} 
-                  className="w-8 h-8 rounded-full border border-primary/50"
-                />
-                <span className="text-sm font-medium hidden md:block">
-                  {user.username}
-                </span>
+                {user.avatarUrl && (
+                  <img
+                    src={user.avatarUrl}
+                    alt={user.username}
+                    className="w-8 h-8 rounded-full border border-white/20"
+                  />
+                )}
+                <span className="text-sm text-gray-300 hidden md:block">{user.username}</span>
               </div>
-              <button 
+              <button
                 onClick={handleLogout}
-                className="p-2 text-muted-foreground hover:text-destructive hover:bg-destructive/10 rounded-md transition-colors"
-                title="Logout"
+                title="Đăng xuất"
+                className="p-2 text-gray-400 hover:text-red-400 hover:bg-red-400/10 rounded-lg transition-colors"
               >
                 <LogOut className="w-4 h-4" />
               </button>
             </div>
           ) : (
-            <a 
+            <a
               href="/api/auth/discord"
-              className="flex items-center gap-2 bg-primary/20 hover:bg-primary/30 text-primary border border-primary hover:neon-glow-primary px-4 py-2 rounded-md transition-all duration-300 text-sm font-bold tracking-wide"
+              className="flex items-center gap-2 text-sm text-gray-300 hover:text-white px-4 py-2 rounded-lg border border-white/10 hover:border-white/20 transition-all"
             >
               <LogIn className="w-4 h-4" />
-              <span>ĐĂNG NHẬP</span>
+              Đăng nhập
             </a>
           )}
+
+          <a
+            href={INVITE_URL}
+            target="_blank"
+            rel="noopener noreferrer"
+            className="flex items-center gap-2 text-sm font-semibold text-white bg-green-500 hover:bg-green-400 px-4 py-2 rounded-lg transition-colors"
+          >
+            Mời bot ngay
+          </a>
         </div>
       </div>
-    </motion.nav>
+    </nav>
   );
 }
