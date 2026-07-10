@@ -9,7 +9,7 @@ import {
 
 const INVITE_URL =
   "https://discord.com/oauth2/authorize?client_id=1446826370838560859&permissions=8&integration_type=0&scope=bot+applications.commands";
-const SUPPORT_URL = "https://discord.gg/your-server"; // thay bằng link server hỗ trợ thật
+const SUPPORT_URL = "https://discord.gg/ty42BqdJMq";
 
 const FEATURES = [
   {
