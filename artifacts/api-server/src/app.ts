@@ -6,6 +6,7 @@ import connectPg from "connect-pg-simple";
 import { pool } from "@workspace/db";
 import router from "./routes";
 import { logger } from "./lib/logger";
+import { config } from "./config";
 
 const PgSession = connectPg(session);
 
@@ -18,16 +19,10 @@ app.use(
     logger,
     serializers: {
       req(req) {
-        return {
-          id: req.id,
-          method: req.method,
-          url: req.url?.split("?")[0],
-        };
+        return { id: req.id, method: req.method, url: req.url?.split("?")[0] };
       },
       res(res) {
-        return {
-          statusCode: res.statusCode,
-        };
+        return { statusCode: res.statusCode };
       },
     },
   }),
@@ -37,11 +32,6 @@ app.use(cors({ origin: true, credentials: true }));
 app.use(express.json());
 app.use(express.urlencoded({ extended: true }));
 
-const sessionSecret = process.env["SESSION_SECRET"];
-if (!sessionSecret) {
-  throw new Error("SESSION_SECRET environment variable is required");
-}
-
 app.use(
   session({
     store: new PgSession({
@@ -49,14 +39,14 @@ app.use(
       tableName: "session",
       createTableIfMissing: true,
     }),
-    secret: sessionSecret,
+    secret: config.session.secret,
     resave: false,
     saveUninitialized: false,
     name: "discord.sid",
     cookie: {
       maxAge: 7 * 24 * 60 * 60 * 1000, // 7 days
       httpOnly: true,
-      secure: process.env["NODE_ENV"] === "production",
+      secure: config.nodeEnv === "production",
       sameSite: "lax",
     },
   }),

@@ -10,6 +10,7 @@ import {
   getGuildIconUrl,
 } from "../lib/discord";
 import { eq } from "drizzle-orm";
+import { config } from "../config";
 
 const router = Router();
 
@@ -17,7 +18,7 @@ function getRedirectUri(req: import("express").Request): string {
   const proto =
     req.headers["x-forwarded-proto"] ?? req.protocol ?? "https";
   const host = req.headers["x-forwarded-host"] ?? req.headers["host"] ?? "";
-  return `${proto}://${host}/api/auth/callback`;
+  return `${proto}://${host}${config.discord.redirectPath}`;
 }
 
 // GET /api/auth/discord — redirect to Discord OAuth with CSRF state

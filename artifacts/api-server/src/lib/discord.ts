@@ -1,17 +1,16 @@
 import { logger } from "./logger";
+import { config } from "../config";
 
 const DISCORD_API = "https://discord.com/api/v10";
-const BOT_TOKEN = process.env["DISCORD_BOT_TOKEN"];
-const CLIENT_ID = process.env["DISCORD_CLIENT_ID"] ?? "1446826370838560859";
-const CLIENT_SECRET = process.env["DISCORD_CLIENT_SECRET"];
+const { botToken, clientId, clientSecret } = config.discord;
 
-if (!BOT_TOKEN) {
-  logger.warn("DISCORD_BOT_TOKEN is not set");
+if (!botToken) {
+  logger.warn("DISCORD_BOT_TOKEN is not set — bot API calls will fail");
 }
 
 export function getOAuthUrl(redirectUri: string, state: string): string {
   const params = new URLSearchParams({
-    client_id: CLIENT_ID,
+    client_id: clientId,
     redirect_uri: redirectUri,
     response_type: "code",
     scope: "identify email guilds",
@@ -28,8 +27,8 @@ export async function exchangeCode(
     method: "POST",
     headers: { "Content-Type": "application/x-www-form-urlencoded" },
     body: new URLSearchParams({
-      client_id: CLIENT_ID,
-      client_secret: CLIENT_SECRET ?? "",
+      client_id: clientId,
+      client_secret: clientSecret,
       grant_type: "authorization_code",
       code,
       redirect_uri: redirectUri,
@@ -99,12 +98,9 @@ export async function getBotGuilds(): Promise<
     owner_id: string;
   }>
 > {
-  const res = await fetch(
-    `${DISCORD_API}/users/@me/guilds?with_counts=true`,
-    {
-      headers: { Authorization: `Bot ${BOT_TOKEN}` },
-    },
-  );
+  const res = await fetch(`${DISCORD_API}/users/@me/guilds?with_counts=true`, {
+    headers: { Authorization: `Bot ${botToken}` },
+  });
   if (!res.ok) throw new Error(`Failed to get bot guilds: ${res.status}`);
   return res.json() as Promise<
     Array<{
@@ -123,7 +119,7 @@ export async function getBotInfo(): Promise<{
   avatar: string | null;
 }> {
   const res = await fetch(`${DISCORD_API}/users/@me`, {
-    headers: { Authorization: `Bot ${BOT_TOKEN}` },
+    headers: { Authorization: `Bot ${botToken}` },
   });
   if (!res.ok) throw new Error(`Failed to get bot info: ${res.status}`);
   return res.json() as Promise<{
