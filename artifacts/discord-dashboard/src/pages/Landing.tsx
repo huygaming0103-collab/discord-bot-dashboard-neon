@@ -161,7 +161,7 @@ export function Landing() {
               style={{ borderColor: "rgba(0,255,157,0.2)" }}
               >
                 <Users className="w-5 h-5" />
-                Hỗ trợ (Discord)
+                Server hỗ trợ
               </a>
             </motion.div>
           </div>
