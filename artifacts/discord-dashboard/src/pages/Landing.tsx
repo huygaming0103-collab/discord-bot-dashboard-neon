@@ -81,7 +81,7 @@ export function Landing() {
       <div
         className="pointer-events-none fixed inset-0 z-0"
         style={{
-          backgroundImage: "radial-gradient(circle, rgba(0,200,255,0.12) 1px, transparent 1px)",
+          backgroundImage: "radial-gradient(circle, rgba(0,255,157,0.13) 1px, transparent 1px)",
           backgroundSize: "28px 28px",
         }}
       />
@@ -100,7 +100,7 @@ export function Landing() {
               initial={{ opacity: 0, y: -10 }}
               animate={{ opacity: 1, y: 0 }}
               transition={{ duration: 0.5 }}
-              className="inline-flex items-center gap-2 px-3 py-1.5 rounded-full border border-yellow-400/40 bg-yellow-400/5 text-yellow-300 text-sm font-medium mb-8"
+              className="inline-flex items-center gap-2 px-3 py-1.5 rounded-full border border-yellow-400/40 bg-yellow-400/5 text-yellow-300 text-sm font-medium mb-8 w-fit"
             >
               <Zap className="w-3.5 h-3.5 fill-yellow-300" />
               Phiên bản V1
@@ -142,7 +142,12 @@ export function Landing() {
                 href={INVITE_URL}
                 target="_blank"
                 rel="noopener noreferrer"
-                className="flex items-center gap-2.5 bg-green-500 hover:bg-green-400 text-white font-semibold px-6 py-3 rounded-xl transition-all duration-200 shadow-lg shadow-green-500/20 hover:shadow-green-400/30"
+                className="flex items-center gap-2.5 font-semibold px-6 py-3 rounded-xl transition-all duration-200 shadow-lg"
+              style={{
+                background: "#00ff9d",
+                color: "#071510",
+                boxShadow: "0 0 20px rgba(0,255,157,0.35)",
+              }}
               >
                 <DiscordIcon className="w-5 h-5" />
                 Mời Bot ngay
@@ -152,7 +157,8 @@ export function Landing() {
                 href={SUPPORT_URL}
                 target="_blank"
                 rel="noopener noreferrer"
-                className="flex items-center gap-2.5 bg-white/5 hover:bg-white/10 text-gray-300 hover:text-white font-semibold px-6 py-3 rounded-xl border border-white/10 hover:border-white/20 transition-all duration-200"
+                className="flex items-center gap-2.5 bg-white/5 hover:bg-white/10 text-gray-300 hover:text-white font-semibold px-6 py-3 rounded-xl border transition-all duration-200"
+              style={{ borderColor: "rgba(0,255,157,0.2)" }}
               >
                 <Users className="w-5 h-5" />
                 Hỗ trợ (Discord)
@@ -178,7 +184,7 @@ export function Landing() {
                 transition={{ delay: 0.4 + i * 0.1 }}
                 className="flex flex-col items-center gap-1"
               >
-                <s.icon className="w-5 h-5 text-cyan-400 mb-1" />
+                <s.icon className="w-5 h-5 mb-1" style={{ color: "#00ff9d" }} />
                 <span className="text-2xl font-bold text-white">{s.value}</span>
                 <span className="text-sm text-gray-500">{s.label}</span>
               </motion.div>
@@ -199,7 +205,7 @@ export function Landing() {
             className="mb-14"
           >
             <h2 className="text-4xl font-extrabold mb-3">
-              Tính năng <span className="text-cyan-400">nổi bật</span>
+              Tính năng <span style={{ color: "#00ff9d" }}>nổi bật</span>
             </h2>
             <p className="text-gray-400 text-lg max-w-xl">
               Sáng tạo bởi người Việt, dành riêng cho cộng đồng Discord Việt Nam sôi động.
@@ -246,7 +252,12 @@ export function Landing() {
               href={INVITE_URL}
               target="_blank"
               rel="noopener noreferrer"
-              className="inline-flex items-center gap-2.5 bg-green-500 hover:bg-green-400 text-white font-semibold px-8 py-3.5 rounded-xl transition-all duration-200 shadow-lg shadow-green-500/20 text-base"
+              className="inline-flex items-center gap-2.5 font-semibold px-8 py-3.5 rounded-xl transition-all duration-200 text-base"
+              style={{
+                background: "#00ff9d",
+                color: "#071510",
+                boxShadow: "0 0 24px rgba(0,255,157,0.4)",
+              }}
             >
               <DiscordIcon className="w-5 h-5" />
               Mời Bot ngay

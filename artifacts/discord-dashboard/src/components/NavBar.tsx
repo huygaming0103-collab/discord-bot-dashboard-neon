@@ -35,11 +35,13 @@ export function NavBar() {
             <img
               src={stats.botAvatarUrl}
               alt="HDGBot"
-              className="w-9 h-9 rounded-full border-2 border-cyan-500/40 group-hover:border-cyan-400 transition-colors"
+              className="w-9 h-9 rounded-full border-2 transition-colors"
+              style={{ borderColor: "rgba(0,255,157,0.45)" }}
             />
           ) : (
-            <div className="w-9 h-9 rounded-full bg-cyan-500/20 border-2 border-cyan-500/40 flex items-center justify-center">
-              <span className="text-cyan-400 text-xs font-bold">H</span>
+            <div className="w-9 h-9 rounded-full border-2 flex items-center justify-center"
+              style={{ background: "rgba(0,255,157,0.1)", borderColor: "rgba(0,255,157,0.4)" }}>
+              <span className="text-xs font-bold" style={{ color: "#00ff9d" }}>H</span>
             </div>
           )}
           <span className="font-bold text-lg text-white tracking-wide">
@@ -124,7 +126,12 @@ export function NavBar() {
             href={INVITE_URL}
             target="_blank"
             rel="noopener noreferrer"
-            className="flex items-center gap-2 text-sm font-semibold text-white bg-green-500 hover:bg-green-400 px-4 py-2 rounded-lg transition-colors"
+            className="flex items-center gap-2 text-sm font-semibold px-4 py-2 rounded-lg transition-all"
+            style={{
+              background: "#00ff9d",
+              color: "#071510",
+              boxShadow: "0 0 14px rgba(0,255,157,0.3)",
+            }}
           >
             Mời bot ngay
           </a>

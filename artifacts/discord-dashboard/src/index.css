@@ -74,52 +74,52 @@
   --elevate-1: rgba(255, 255, 255, 0.04);
   --elevate-2: rgba(255, 255, 255, 0.09);
 
-  /* Dark Navy Theme */
+  /* Dark Navy — Neon Green-Blue Theme */
   --background: 220 40% 5%;      /* #070c18 */
   --foreground: 0 0% 98%;
 
   --border: 220 30% 12%;
-  
+
   --card: 220 35% 7%;
   --card-foreground: 0 0% 98%;
-  --card-border: 190 100% 50%;
+  --card-border: 155 100% 50%;
 
   --popover: 220 35% 7%;
   --popover-foreground: 0 0% 98%;
   --popover-border: 220 30% 12%;
 
-  --primary: 190 100% 50%;        /* Cyan #00d4ff */
+  --primary: 155 100% 50%;        /* Neon green-blue #00ff9d */
   --primary-foreground: 220 40% 5%;
 
-  --secondary: 142 71% 45%;       /* Green #22c55e */
-  --secondary-foreground: 0 0% 100%;
+  --secondary: 170 100% 42%;      /* Deeper green-blue #00d68a */
+  --secondary-foreground: 220 40% 5%;
 
   --muted: 220 30% 12%;
   --muted-foreground: 215 15% 55%;
 
-  --accent: 43 96% 56%;           /* Yellow #f59e0b for badges */
+  --accent: 43 96% 56%;           /* Yellow for badges */
   --accent-foreground: 220 40% 5%;
 
   --destructive: 0 84% 60%;
   --destructive-foreground: 0 0% 98%;
 
   --input: 220 30% 12%;
-  --ring: 190 100% 50%;
+  --ring: 155 100% 50%;
 
-  --chart-1: 190 100% 50%;
-  --chart-2: 142 71% 45%;
+  --chart-1: 155 100% 50%;
+  --chart-2: 170 100% 42%;
   --chart-3: 43 96% 56%;
-  --chart-4: 258 90% 66%;
+  --chart-4: 210 100% 60%;
   --chart-5: 330 81% 60%;
 
   --sidebar: 220 40% 5%;
   --sidebar-foreground: 0 0% 98%;
   --sidebar-border: 220 30% 12%;
-  --sidebar-primary: 190 100% 50%;
+  --sidebar-primary: 155 100% 50%;
   --sidebar-primary-foreground: 220 40% 5%;
   --sidebar-accent: 220 30% 12%;
   --sidebar-accent-foreground: 0 0% 98%;
-  --sidebar-ring: 190 100% 50%;
+  --sidebar-ring: 155 100% 50%;
 
   --app-font-sans: 'Inter', system-ui, sans-serif;
   --app-font-serif: Georgia, serif;
