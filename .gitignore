@@ -48,7 +48,7 @@ Thumbs.db
 .cache/
 .local/
 
-# Local environment variables — never commit real secrets
-.env
+# Local environment variables — safe to commit in a PRIVATE repo only
+# .env  ← intentionally tracked (private repo)
 .env.local
 .env.*.local

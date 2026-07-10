@@ -12,9 +12,10 @@ import { config as dotenvLoad } from "dotenv";
 import { resolve, dirname } from "node:path";
 import { fileURLToPath } from "node:url";
 
-// Load .env from repo root only in development.
-// dotenv will NOT override variables that the platform has already set.
-if (process.env["NODE_ENV"] !== "production") {
+// Load .env from repo root in ALL environments.
+// dotenv will NOT override variables the platform has already injected,
+// so this is safe to call on Vercel, Replit, and local dev alike.
+{
   const thisFile = fileURLToPath(import.meta.url);
   // src/config.ts → artifacts/api-server/src → artifacts/api-server → artifacts → repo-root
   const repoRoot = resolve(dirname(thisFile), "..", "..", "..", "..");
