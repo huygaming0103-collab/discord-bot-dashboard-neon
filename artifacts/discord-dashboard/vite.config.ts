@@ -54,7 +54,9 @@ export default defineConfig({
   },
   root: path.resolve(import.meta.dirname),
   build: {
-    outDir: path.resolve(import.meta.dirname, 'dist/public'),
+    // Output directly to repo-root /public so Vercel finds it without a copy step.
+    // On Replit dev the build is rarely run so this path is fine.
+    outDir: path.resolve(import.meta.dirname, '..', '..', 'public'),
     emptyOutDir: true,
   },
   server: {

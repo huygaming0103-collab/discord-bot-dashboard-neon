@@ -2,7 +2,7 @@
   "version": 2,
   "installCommand": "pnpm install",
   "buildCommand": "pnpm -w run vercel-build",
-  "outputDirectory": "artifacts/discord-dashboard/dist/public",
+  "outputDirectory": "public",
   "framework": null,
   "rewrites": [
     { "source": "/api/(.*)", "destination": "/api/index" },
