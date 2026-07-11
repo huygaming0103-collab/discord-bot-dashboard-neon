@@ -3,7 +3,7 @@ import { motion } from "framer-motion";
 import { NavBar } from "@/components/NavBar";
 import { useGetBotStats } from "@workspace/api-client-react";
 import {
-  Zap, Users, Shield, Music, Trophy, Coins,
+  Zap, Users, Shield, Trophy, Coins,
   Server, MessageSquare, Code, Bot
 } from "lucide-react";
 
@@ -35,14 +35,6 @@ const FEATURES = [
     border: "border-green-400/20",
     title: "Kiểm duyệt thông minh",
     desc: "Lọc spam, từ ngữ xấu, auto-mod linh hoạt giúp server luôn sạch và an toàn.",
-  },
-  {
-    icon: Music,
-    color: "text-purple-400",
-    bg: "bg-purple-400/10",
-    border: "border-purple-400/20",
-    title: "Phát nhạc chất lượng",
-    desc: "Phát nhạc từ YouTube, Spotify với chất lượng cao và không giật lag.",
   },
   {
     icon: MessageSquare,
