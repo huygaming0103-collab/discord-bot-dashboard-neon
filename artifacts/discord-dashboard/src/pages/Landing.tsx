@@ -113,9 +113,10 @@ export function Landing() {
               transition={{ duration: 0.6, delay: 0.1 }}
               className="text-5xl md:text-6xl font-extrabold leading-tight mb-6 tracking-tight"
             >
-              Nâng tầm Server Discord
+              Hãy để{" "}
+              <span style={{ color: "#00ff9d" }}>HDGBot</span>
               <br />
-              <span className="text-cyan-400">Của bạn với HDGBot</span>
+              nâng tầm trải nghiệm của bạn
             </motion.h1>
 
             {/* Description */}
